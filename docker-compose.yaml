@@ -24,6 +24,7 @@ services:
       - ./volumes/database:/var/lib/postgresql/data
       - ./postgis/set-auth.sh:/docker-entrypoint-initdb.d/set-auth.sh
       - ./postgis/skip-initdb-postgis.sh:/docker-entrypoint-initdb.d/postgis.sh
+      - ./postgis/tune-postgres.sh:/docker-entrypoint-initdb.d/tune-postgres.sh
       - nominatim-pg-module:/app/module
 volumes:
   nominatim-pg-module:
