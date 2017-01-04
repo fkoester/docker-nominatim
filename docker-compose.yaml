@@ -9,6 +9,8 @@ services:
       - nominatim-pg-module:/app/module
     environment:
       - PGHOST=postgis
+      - PLANET_DATA_URL=${PLANET_DATA_URL:-http://download.geofabrik.de/europe/monaco-latest.osm.pbf}
+      - OSM2PGSQL_CACHE=${OSM2PGSQL_CACHE:-14000}
     ports:
       - ${EXTERNAL_PORT:-8080}:80
   postgis:
