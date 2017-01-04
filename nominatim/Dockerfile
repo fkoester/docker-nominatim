@@ -1,10 +1,12 @@
-FROM php:5-apache
+FROM debian:jessie
 MAINTAINER Fabian Köster <mail@fabian-koester.com>
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    apache2 \
     build-essential \
     curl \
+    libapache2-mod-php5 \
     libboost-dev \
     libboost-filesystem-dev \
     libboost-system-dev \
@@ -18,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libtool \
     libxml2-dev \
     php-db \
+    php5 \
     php5-json \
     php5-pgsql \
     php-pear \
@@ -26,7 +29,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     proj-bin \
  && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -g 1234 -r nominatim && useradd -u 1234 -r -g nominatim nominatim
+ARG WEBROOT=/var/www/html/nominatim
+RUN groupadd -r nominatim && useradd -r -g nominatim nominatim
+RUN mkdir -m 755 ${WEBROOT} && chown -R nominatim:nominatim ${WEBROOT}
 USER nominatim
 
 WORKDIR /app
@@ -39,13 +44,11 @@ RUN curl -o nominatim.tar.bz2 http://www.nominatim.org/release/Nominatim-${NOMIN
   && ./configure \
   && make
 
-# COPY skip-create-db.patch .
-# RUN patch -p1 < skip-create-db.patch
-
 COPY wait-for-it.sh .
 COPY entrypoint.sh .
 COPY local.php ./settings/local.php
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
+COPY apache2-foreground /usr/local/bin
 
 VOLUME /importdata
-EXPOSE 8080
 CMD /app/entrypoint.sh

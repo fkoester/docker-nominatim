@@ -8,7 +8,8 @@ services:
       - nominatim-pg-module:/app/module
     environment:
       - PGHOST=postgis
-      - POSTGRES_PASSWORD=nominatim
+    ports:
+      - 8080:80
   postgis:
     image: mdillon/postgis:9.4
     environment:

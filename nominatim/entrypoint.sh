@@ -1,5 +1,9 @@
 #! /bin/bash
 
+set -e
+
+export PLANET_DATA_URL=${PLANET_DATA_URL:-http://download.geofabrik.de/europe/monaco-latest.osm.pbf}
+
 function log_error {
   if [ -n "${LOGFILE}" ]
   then
@@ -22,11 +26,29 @@ function die {
     exit 1
 }
 
-log_info "==> Downloading Planet file..."
-#curl -o /importdata/data.osm.pbf http://download.geofabrik.de/europe/monaco-latest.osm.pbf || die "Failed to download planet file"
+function initialization {
+  if [ -s /importdata/data.osm.pbf ]; then
+    log_info "==> Planet file /importdata/data.osm.pbf already exists, skipping download."
+  else
+    log_info "==> Downloading Planet file..."
+    curl -o /importdata/data.osm.pbf || die "Failed to download planet file"
+  fi
 
-log_info "==> Waiting for database to come up..."
-./wait-for-it.sh -s -t 300 ${PGHOST}:5432 || die "Database did not respond"
+  log_info "==> Waiting for database to come up..."
+  ./wait-for-it.sh -s -t 300 ${PGHOST}:5432 || die "Database did not respond"
 
-log_info "==> Starting Import..."
-/app/utils/setup.php --osm-file /importdata/data.osm.pbf --all --osm2pgsql-cache 18000 2>&1 | tee setup.log
+  log_info "==> Starting Import..."
+  /app/utils/setup.php --osm-file /importdata/data.osm.pbf --all --osm2pgsql-cache 18000 2>&1 || die "Import failed"
+
+  log_info "==> Creating website..."
+  /app/utils/setup.php --create-website /var/www/html/nominatim
+
+  touch /initialized || die
+}
+
+if [ ! -f /initialized ]; then
+  log_info "Container has not been initialized, will start initial import now!"
+  initialization
+fi
+
+apache2-foreground "$@"
