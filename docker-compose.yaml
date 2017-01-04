@@ -5,19 +5,21 @@ services:
       context: nominatim
     volumes:
       - ./volumes/importdata:/importdata
+      - ./volumes/webroot:/var/www/html/nominatim
       - nominatim-pg-module:/app/module
     environment:
       - PGHOST=postgis
     ports:
-      - 8080:80
+      - ${EXTERNAL_PORT:-8080}:80
   postgis:
     image: mdillon/postgis:9.4
     environment:
       - POSTGRES_DB=nominatim
       - POSTGRES_USER=nominatim
       - POSTGRES_PASSWORD=nominatim
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      # - ./volumes/database:/var/lib/postgresql/data
+      - ./volumes/database:/var/lib/postgresql/data
       - ./postgis/set-auth.sh:/docker-entrypoint-initdb.d/set-auth.sh
       - ./postgis/skip-initdb-postgis.sh:/docker-entrypoint-initdb.d/postgis.sh
       - nominatim-pg-module:/app/module
