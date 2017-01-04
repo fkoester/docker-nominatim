@@ -11,6 +11,6 @@ checkpoint_timeout = 10min
 checkpoint_completion_target = 0.9
 fsync = off
 full_page_writes = off
-max_wal_size = 1GB
-min_wal_size = 80MB
+max_wal_size = 4GB
+min_wal_size = 1GB
 EOF
