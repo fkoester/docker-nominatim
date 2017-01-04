@@ -1,0 +1,24 @@
+version: '2.1'
+services:
+  nominatim:
+    build:
+      context: nominatim
+    volumes:
+      - ./volumes/importdata:/importdata
+      - nominatim-pg-module:/app/module
+    environment:
+      - PGHOST=postgis
+      - POSTGRES_PASSWORD=nominatim
+  postgis:
+    image: mdillon/postgis:9.4
+    environment:
+      - POSTGRES_DB=nominatim
+      - POSTGRES_USER=nominatim
+      - POSTGRES_PASSWORD=nominatim
+    volumes:
+      # - ./volumes/database:/var/lib/postgresql/data
+      - ./postgis/set-auth.sh:/docker-entrypoint-initdb.d/set-auth.sh
+      - ./postgis/skip-initdb-postgis.sh:/docker-entrypoint-initdb.d/postgis.sh
+      - nominatim-pg-module:/app/module
+volumes:
+  nominatim-pg-module:
