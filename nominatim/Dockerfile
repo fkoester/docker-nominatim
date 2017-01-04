@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ARG WEBROOT=/var/www/html/nominatim
 RUN groupadd -r nominatim && useradd -r -g nominatim nominatim
-RUN mkdir -m 755 ${WEBROOT} && chown -R nominatim:nominatim ${WEBROOT}
+RUN mkdir -m 755 ${WEBROOT} /app && chown -R nominatim:nominatim ${WEBROOT} /app
 USER nominatim
 
 WORKDIR /app
