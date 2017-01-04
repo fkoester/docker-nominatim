@@ -3,7 +3,7 @@
 set -e
 
 export PLANET_DATA_URL=${PLANET_DATA_URL:-http://download.geofabrik.de/europe/monaco-latest.osm.pbf}
-export OSM2PGSQL_CACHE=${OSM2PGSQL_CACHE:-18000}
+export OSM2PGSQL_CACHE=${OSM2PGSQL_CACHE:-14000}
 
 function log_error {
   if [ -n "${LOGFILE}" ]

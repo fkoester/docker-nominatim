@@ -34,7 +34,7 @@ After completion (should take only a few minutes for Monaco), you should be able
 Create a file `.env` in the working directory with any of the following variables:
 
 * `PLANET_DATA_URL`: The PBF planet file to download and import (default `http://download.geofabrik.de/europe/monaco-latest.osm.pbf`)
-* `OSM2PGSQL_CACHE`: The cache size passed to nominatim via the `--osm2pgsql-cache` argument (default `18000`)
+* `OSM2PGSQL_CACHE`: The cache size (in MB) passed to nominatim via the `--osm2pgsql-cache` argument. More info [here](http://wiki.openstreetmap.org/wiki/Nominatim/Installation) and [here](http://www.volkerschatz.com/net/osm/osm2pgsql-usage.html) (default `14000`)
 * `EXTERNAL_PORT`: The external port to bind to (default `8080`)
 
 ## Transferring prebuilt instance to other host
