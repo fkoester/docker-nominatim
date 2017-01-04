@@ -32,7 +32,7 @@ function initialization {
     log_info "==> Planet file /importdata/data.osm.pbf already exists, skipping download."
   else
     log_info "==> Downloading Planet file..."
-    curl -o /importdata/data.osm.pbf || die "Failed to download planet file"
+    curl -o /importdata/data.osm.pbf ${PLANET_DATA_URL} || die "Failed to download planet file"
   fi
 
   log_info "==> Waiting for database to come up..."
