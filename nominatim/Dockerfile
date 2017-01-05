@@ -29,11 +29,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     proj-bin \
  && rm -rf /var/lib/apt/lists/*
 
-VOLUME /app/module
-
 ARG WEBROOT=/var/www/html/nominatim
 RUN groupadd -r nominatim && useradd -r -g nominatim nominatim
-RUN mkdir -p ${WEBROOT} && chmod -R 755 ${WEBROOT} /app && chown -R nominatim:nominatim ${WEBROOT} /app
+RUN mkdir -p ${WEBROOT} /app && chmod -R 755 ${WEBROOT} /app && chown -R nominatim:nominatim ${WEBROOT} /app
 USER nominatim
 
 WORKDIR /app
@@ -54,4 +52,5 @@ COPY apache2-foreground /usr/local/bin
 RUN /app/utils/setup.php --create-website /var/www/html/nominatim
 
 VOLUME /importdata
+VOLUME /app/module
 CMD /app/entrypoint.sh
