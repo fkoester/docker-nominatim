@@ -4,6 +4,7 @@ services:
     image: bringnow/nominatim
     volumes:
       - ./volumes/importdata:/importdata
+      - /app/module
     environment:
       - PGHOST=postgis
       - PLANET_DATA_URL=${PLANET_DATA_URL:-http://download.geofabrik.de/europe/monaco-latest.osm.pbf}
