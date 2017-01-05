@@ -3,8 +3,7 @@
 A docker setup for running a custom instance of the [Nominatim geocoding service](http://wiki.openstreetmap.org/wiki/Nominatim).
 
 In contrast to other nominatim docker setups I have seen so far (see [Alternatives](#alternatives)) this setup has two main advantages:
-
-1. Instead of one docker container for all services (Apache and PostgreSQL database) it uses two
+1. Instead of one single docker container for all services (Apache and PostgreSQL database) it uses two
   * Apache containing the Nominatim instance
   * PostgreSQL + PostGIS
 
@@ -19,14 +18,13 @@ This design of course means you cannot just prebuilt the ready-to-use Nominatim 
 
 ## Getting started
 
-It is as simple as running
-
-```
+First make sure you have current versions of Docker (>= 1.12) and docker-compose (>= 1.9). Then clone this repository and run
+```bash
 $ docker-compose up
 ```
 
 This will command will:
-* Build the necessary docker images
+* Fetch the necessary docker images
 * Start the OSM data import process, by default for Monaco (see following section for how to change)
 * Create all the necessary database indexes for nominatim
 * Startup an Apache instance at port 8080 (configurable)
