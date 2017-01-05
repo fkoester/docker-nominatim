@@ -37,14 +37,13 @@ function initialization {
 
   log_info "==> Starting Import..."
   /app/utils/setup.php --osm-file /importdata/data.osm.pbf --all --osm2pgsql-cache ${OSM2PGSQL_CACHE} 2>&1 || die "Import failed"
-
-  log_info "==> Creating website..."
-  /app/utils/setup.php --create-website /var/www/html/nominatim || die "Creating website failed"
 }
 
-if [ ! -s /var/www/html/nominatim/index.php ]; then
-  log_info "Container has not been initialized, will start initial import now!"
-  initialization
+if psql -lqt | cut -d \| -f 1 | grep -qw nominatim; then
+    log_info "Database nominatim already exists, skipping initialization."
+else
+    log_info "Container has not been initialized, will start initial import now!"
+    initialization
 fi
 
 apache2-foreground "$@"

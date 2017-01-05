@@ -50,5 +50,7 @@ COPY local.php ./settings/local.php
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 COPY apache2-foreground /usr/local/bin
 
+RUN /app/utils/setup.php --create-website /var/www/html/nominatim
+
 VOLUME /importdata
 CMD /app/entrypoint.sh

@@ -4,7 +4,6 @@ services:
     image: bringnow/nominatim
     volumes:
       - ./volumes/importdata:/importdata
-      - ./volumes/webroot:/var/www/html/nominatim
       - nominatim-pg-module:/app/module
     environment:
       - PGHOST=postgis
