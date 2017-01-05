@@ -29,6 +29,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     proj-bin \
  && rm -rf /var/lib/apt/lists/*
 
+VOLUME /app/module
+
 ARG WEBROOT=/var/www/html/nominatim
 RUN groupadd -r nominatim && useradd -r -g nominatim nominatim
 RUN mkdir -m 755 ${WEBROOT} /app && chown -R nominatim:nominatim ${WEBROOT} /app
