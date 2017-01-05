@@ -1,8 +1,7 @@
 version: '2.1'
 services:
   nominatim:
-    build:
-      context: nominatim
+    image: bringnow/nominatim
     volumes:
       - ./volumes/importdata:/importdata
       - ./volumes/webroot:/var/www/html/nominatim

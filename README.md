@@ -13,6 +13,10 @@ In contrast to other nominatim docker setups I have seen so far this setup has t
 
 This design of course means you cannot just prebuilt the ready-to-use Nominatim image on one host and copy it over to another (e.g. production) machine. But you can still copy the prebuilt database data, as described in section [Transferring prebuilt instance to other host](#Transferring prebuilt instance to other host)
 
+## Supported tags and respective Dockerfile links
+
+* `2.5.1`, `2.5`, `latest` [(Dockerfile)](https://github.com/bringnow/docker-nominatim/blob/master/nominatim/Dockerfile)
+
 ## Getting started
 
 It is as simple as running
