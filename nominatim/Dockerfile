@@ -33,7 +33,7 @@ VOLUME /app/module
 
 ARG WEBROOT=/var/www/html/nominatim
 RUN groupadd -r nominatim && useradd -r -g nominatim nominatim
-RUN chmod -R 755 ${WEBROOT} /app && chown -R nominatim:nominatim ${WEBROOT} /app
+RUN mkdir -p ${WEBROOT} && chmod -R 755 ${WEBROOT} /app && chown -R nominatim:nominatim ${WEBROOT} /app
 USER nominatim
 
 WORKDIR /app
