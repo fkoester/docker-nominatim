@@ -2,7 +2,7 @@
 
 A docker setup for running a custom instance of the [Nominatim geocoding service](http://wiki.openstreetmap.org/wiki/Nominatim).
 
-In contrast to other nominatim docker setups I have seen so far this setup has two advantages.
+In contrast to other nominatim docker setups I have seen so far this setup has two advantages"
 
 1. Instead of one docker container for all services (Apache and PostgreSQL database) it uses two
   * Apache containing the Nominatim instance
