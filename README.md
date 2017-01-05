@@ -44,3 +44,8 @@ Create a file `.env` in the working directory with any of the following variable
 ## Transferring prebuilt instance to other host
 
 **TODO**
+
+## Alternatives
+
+* [helvalius/nominatim-docker](https://github.com/helvalius/nominatim-docker)
+* [mediagis/nominatim-docker](https://github.com/mediagis/nominatim-docker)
