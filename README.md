@@ -18,20 +18,27 @@ This design of course means you cannot just prebuilt the ready-to-use Nominatim 
 
 ## Getting started
 
-First make sure you have current versions of Docker (>= 1.12) and docker-compose (>= 1.9). Then clone this repository and run
-```bash
-$ docker-compose up
-```
+1. Make sure you have current versions of Docker (>= 1.12) and docker-compose (>= 1.9).
+2. Clone this repository
+3. Create a docker volume named `nominatim-database`:
 
-This will command will:
-* Fetch the necessary docker images
-* Start the OSM data import process, by default for Monaco (see following section for how to change)
-* Create all the necessary database indexes for nominatim
-* Startup an Apache instance at port 8080 (configurable)
+  ```bash
+  $ docker volume create nominatim-database
+  ```
+4. Create and start the docker containers using docker-compose:
+
+  ```bash
+  $ docker-compose up
+  ```
+  This will command will:
+  * Fetch the necessary docker images
+  * Start the OSM data import process, by default for Monaco (see following section for how to change)
+  * Create all the necessary database indexes for nominatim
+  * Startup an Apache instance at port 8080 (configurable)
 
 After completion (should take only a few minutes for Monaco), you should be able to access the Nominatim instance at [http://localhost:8080](http://localhost:8080).
 
-The initial import will only happen on first startup, because the entrypoint script will check if a database named `nominatim` already exists. In order to repeat the initial import, just remove the volume holding the database data.
+The initial import will only happen on first startup, because the entrypoint script will check if a database named `nominatim` already exists. In order to repeat the initial import, just remove the data volume `nominatim-database`: `docker volume rm nominatim-database`
 
 ## Configuration
 
@@ -47,21 +54,13 @@ Transferring the prebuilt instance basically means copying the contents of the P
 
 On the machine with the prebuilt nominatim instance, run the following steps:
 1. Get the [ssh-copy-docker-volume.sh](https://github.com/bringnow/ssh-copy-docker-volume) script.
-2. Find out the name of the nominatim-database docker volume:
+2. Transfer the nominatim-database docker volume to the target host:
 
   ```bash
-  $ docker volume ls | grep nominatim-database
-  local               dockernominatim_nominatim-database
-  ```
-3. Transfer this volume to the target host:
-
-  ```bash
-  $ ./ssh-copy-docker-volume.sh dockernominatim_nominatim-database example.com
+  $ ./ssh-copy-docker-volume.sh nominatim-database example.com
   ```
 
-Then on the target machine, checkout this repository again and simply run `docker-compose up` again.
-
-*Make sure the docker-compose project names are the same, so docker-compose will use the volume copied before!* The project name is usually generated from the name of the parent directory (`dockernominatim` in the example above). You can set the project name by defining the environment variable `COMPOSE_PROJECT_NAME` (for example in the `.env` file).
+Then on the target machine, follow the steps from the [Getting Started](#getting-started) section but skip step 2, the creation of the volume.
 
 ## Alternatives
 
