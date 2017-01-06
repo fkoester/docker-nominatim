@@ -31,6 +31,8 @@ This will command will:
 
 After completion (should take only a few minutes for Monaco), you should be able to access the Nominatim instance at [http://localhost:8080](http://localhost:8080).
 
+The initial import will only happen on first startup, because the entrypoint script will check if a database named `nominatim` already exists. In order to repeat the initial import, just remove the volume holding the database data.
+
 ## Configuration
 
 Create a file `.env` in the working directory with any of the following variables:
