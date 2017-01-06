@@ -23,7 +23,7 @@ This design of course means you cannot just prebuilt the ready-to-use Nominatim 
 3. Create a docker volume named `nominatim-database`:
 
   ```bash
-  $ docker volume create nominatim-database
+  $ docker volume create --name nominatim-database
   ```
 4. Create and start the docker containers using docker-compose:
 
