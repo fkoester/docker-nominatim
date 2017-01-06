@@ -41,6 +41,8 @@ Create a file `.env` in the working directory with any of the following variable
 
 ## Transferring prebuilt instance to another host
 
+Transferring the prebuilt instance basically means copying the contents of the PostgreSQL database, which in this setup are stored in a named docker volume.
+
 On the machine with the prebuilt nominatim instance, run the following steps:
 1. Get the [ssh-copy-docker-volume.sh](https://github.com/bringnow/ssh-copy-docker-volume) script.
 2. Find out the name of the nominatim-database docker volume:
