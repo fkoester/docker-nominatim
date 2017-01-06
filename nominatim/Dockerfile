@@ -49,6 +49,7 @@ RUN curl -o nominatim.tar.bz2 http://www.nominatim.org/release/Nominatim-${NOMIN
 COPY entrypoint.sh wait-for-it.sh ./
 COPY local.php ./settings/local.php
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
+COPY ports.conf /etc/apache2/ports.conf
 COPY apache2-foreground /usr/local/bin
 
 RUN /app/utils/setup.php --create-website /var/www/html/nominatim
