@@ -1,6 +1,8 @@
 FROM debian:jessie
 MAINTAINER Fabian Köster <mail@fabian-koester.com>
 
+EXPOSE 8080
+
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
     apache2 \
