@@ -1,11 +1,11 @@
 # docker-nominatim
 
-A docker setup for running a custom instance of the [Nominatim geocoding service](http://wiki.openstreetmap.org/wiki/Nominatim).
+A docker setup for running a custom instance of the [Nominatim geocoding service](http://wiki.openstreetmap.org/wiki/Nominatim) providing a nominatim-only image for use together with the plain [mdillon/postgis](https://hub.docker.com/r/mdillon/postgis/) image.
 
 In contrast to other nominatim docker setups I have seen so far (see [Alternatives](#alternatives)) this setup has two main advantages:
 1. Instead of one single docker container for all services (Apache and PostgreSQL database) it uses two
   * Apache containing the Nominatim instance
-  * PostgreSQL + PostGIS
+  * PostgreSQL + PostGIS (using plain [mdillon/postgis](https://hub.docker.com/r/mdillon/postgis/) image)
 
   This better complies with Docker's key principal: one container per service. The two docker containers are orchestrated using `docker-compose`.
 2. The import does not happen at buildtime of the image but ruther at runtime. This property is a consequence of 1.) because Nominatim of course needs the Database to import into. It also avoids nasty problems happening when trying to coordinate multiple processes from a Dockerfile.
@@ -48,11 +48,13 @@ Transferring the prebuilt instance basically means copying the contents of the P
 On the machine with the prebuilt nominatim instance, run the following steps:
 1. Get the [ssh-copy-docker-volume.sh](https://github.com/bringnow/ssh-copy-docker-volume) script.
 2. Find out the name of the nominatim-database docker volume:
+
   ```bash
   $ docker volume ls | grep nominatim-database
   local               dockernominatim_nominatim-database
   ```
 3. Transfer this volume to the target host:
+
   ```bash
   $ ./ssh-copy-docker-volume.sh dockernominatim_nominatim-database example.com
   ```
