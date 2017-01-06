@@ -41,7 +41,21 @@ Create a file `.env` in the working directory with any of the following variable
 
 ## Transferring prebuilt instance to another host
 
-**TODO**
+On the machine with the prebuilt nominatim instance, run the following steps:
+1. Get the [ssh-copy-docker-volume.sh](https://github.com/bringnow/ssh-copy-docker-volume) script.
+2. Find out the name of the nominatim-database docker volume:
+  ```bash
+  $ docker volume ls | grep nominatim-database
+  local               dockernominatim_nominatim-database
+  ```
+3. Transfer this volume to the target host:
+  ```bash
+  $ ./ssh-copy-docker-volume.sh dockernominatim_nominatim-database example.com
+  ```
+
+Then on the target machine, checkout this repository again and simply run `docker-compose up` again.
+
+*Make sure the docker-compose project names are the same, so docker-compose will use the volume copied before!* The project name is usually generated from the name of the parent directory (`dockernominatim` in the example above). You can set the project name by defining the environment variable `COMPOSE_PROJECT_NAME` (for example in the `.env` file).
 
 ## Alternatives
 
