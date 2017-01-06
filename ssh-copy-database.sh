@@ -12,4 +12,4 @@ then
   exit -1
 fi
 
-docker run --rm -v dockernominatim_nominatim-database:/from alpine ash -c "cd /from ; tar -cf - . " | ssh ${TARGET_HOST} 'docker run --rm -i -v dockernominatim_nominatim-database:/to alpine ash -c "cd /to ; tar -xvf - " '
+docker run --rm -v dockernominatim_nominatim-database:/from alpine ash -c "cd /from ; tar -cjf - . " | ssh ${TARGET_HOST} 'docker run --rm -i -v dockernominatim_nominatim-database:/to alpine ash -c "cd /to ; tar -xjvf - " '
