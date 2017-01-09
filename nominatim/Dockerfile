@@ -52,7 +52,6 @@ RUN mkdir -p ${WEBROOT} /app && chmod -R 755 ${WEBROOT} /app && chown -R nominat
 WORKDIR /app
 ARG NOMINATIM_VERSION=2.5.1
 ARG NOMINATIM_SHA256=0c2d7fcafc3caa42b3f5f2041ecf33bb22377ffe861a0b97a5aa27b6552d597b
-USER nominatim
 RUN gosu nominatim curl -o nominatim.tar.bz2 http://www.nominatim.org/release/Nominatim-${NOMINATIM_VERSION}.tar.bz2 \
   && echo "${NOMINATIM_SHA256} nominatim.tar.bz2" | sha256sum -c \
   && gosu nominatim tar -xf nominatim.tar.bz2 --strip-components=1 \
