@@ -29,6 +29,7 @@ function initialization {
     log_info "==> Planet file /importdata/data.osm.pbf already exists, skipping download."
   else
     log_info "==> Downloading Planet file..."
+    chown -R nominatim:nominatim /importdata
     gosu nominatim curl -L -o /importdata/data.osm.pbf ${PLANET_DATA_URL} || die "Failed to download planet file"
   fi
 
@@ -42,7 +43,7 @@ function initialization {
 log_info "==> Waiting for database to come up..."
 ./wait-for-it.sh -s -t 300 ${PGHOST}:5432 || die "Database did not respond"
 
-if psql -lqt | cut -d \| -f 1 | grep -qw nominatim; then
+if gosu nominatim psql -lqt | cut -d \| -f 1 | grep -qw nominatim; then
     log_info "Database nominatim already exists, skipping initialization."
 else
     log_info "Container has not been initialized, will start initial import now!"
