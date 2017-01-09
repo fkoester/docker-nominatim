@@ -14,7 +14,7 @@ In contrast to other nominatim docker setups I have seen so far (see [Alternativ
 
   This property is a consequence of 1.) because Nominatim of course needs the Database to import into. It also avoids nasty problems happening when trying to coordinate multiple processes from a Dockerfile.
 
-This design of course means you cannot just prebuilt the ready-to-use Nominatim image on one host and copy it over to another (e.g. production) machine. But you can still copy the prebuilt database data, as described in section [Transferring prebuilt instance to other host](#transferring-prebuilt-instance-to-another-host)
+This design of course means you cannot just prebuilt the ready-to-use Nominatim image on one host and copy it over to another (e.g. production) machine. But you can still copy the prebuilt database data, as described in section [Transferring prebuilt instance to other host](#transferring-prebuilt-instance-to-another-host).
 
 ## Supported tags and respective Dockerfile links
 
@@ -42,7 +42,10 @@ This design of course means you cannot just prebuilt the ready-to-use Nominatim 
 
 After completion (should take only a few minutes for Monaco), you should be able to access the Nominatim instance at [http://localhost:8080](http://localhost:8080).
 
-The initial import will only happen on first startup, because the entrypoint script will check if a database named `nominatim` already exists. In order to repeat the initial import, just remove the data volume `nominatim-database`: `docker volume rm nominatim-database`
+The initial import will only happen on first startup, because the entrypoint script will check if a database named `nominatim` already exists. In order to repeat the initial import, just remove the data volume `nominatim-database`:
+```bash
+$ docker volume rm nominatim-database
+```
 
 ## Configuration
 
@@ -50,13 +53,14 @@ Create a file `.env` in the working directory with any of the following variable
 
 * `PLANET_DATA_URL`: The PBF planet file to download and import (default `http://download.geofabrik.de/europe/monaco-latest.osm.pbf`)
 * `OSM2PGSQL_CACHE`: The cache size (in MB) passed to nominatim via the `--osm2pgsql-cache` argument. More info [here](http://wiki.openstreetmap.org/wiki/Nominatim/Installation) and [here](http://www.volkerschatz.com/net/osm/osm2pgsql-usage.html) (default `14000`)
-* `EXTERNAL_PORT`: The external port to bind to (default `8080`)
+* `EXTERNAL_PORT`: The external port (and ip address) to bind to (default `127.0.0.1:8080`)
 
 ## Transferring prebuilt instance to another host
 
-Transferring the prebuilt instance basically means copying the contents of the PostgreSQL database, which in this setup are stored in a named docker volume.
+Transferring the prebuilt instance basically means copying the contents of the PostgreSQL database, which in this setup are stored in the named docker volume  `nominatim-database`.
 
 On the machine with the prebuilt nominatim instance, run the following steps:
+
 1. Get the [ssh-copy-docker-volume.sh](https://github.com/bringnow/ssh-copy-docker-volume) script.
 2. Make sure the Docker containers are stopped:
 
