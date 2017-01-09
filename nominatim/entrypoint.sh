@@ -29,11 +29,14 @@ function initialization {
     log_info "==> Planet file /importdata/data.osm.pbf already exists, skipping download."
   else
     log_info "==> Downloading Planet file..."
-    curl -L -o /importdata/data.osm.pbf ${PLANET_DATA_URL} || die "Failed to download planet file"
+    gosu nominatim curl -L -o /importdata/data.osm.pbf ${PLANET_DATA_URL} || die "Failed to download planet file"
   fi
 
+  log_info "==> Adding user www-data to database"
+  createuser -SDR www-data
+
   log_info "==> Starting Import..."
-  /app/utils/setup.php --osm-file /importdata/data.osm.pbf --all --osm2pgsql-cache ${OSM2PGSQL_CACHE} 2>&1 || die "Import failed"
+  gosu nominatim /app/utils/setup.php --osm-file /importdata/data.osm.pbf --all --osm2pgsql-cache ${OSM2PGSQL_CACHE} 2>&1 || die "Import failed"
 }
 
 log_info "==> Waiting for database to come up..."

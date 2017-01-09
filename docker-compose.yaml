@@ -9,7 +9,7 @@ services:
       - PLANET_DATA_URL=${PLANET_DATA_URL:-http://download.geofabrik.de/europe/monaco-latest.osm.pbf}
       - OSM2PGSQL_CACHE=${OSM2PGSQL_CACHE:-14000}
     ports:
-      - ${EXTERNAL_PORT:-127.0.0.1:8080}:8080
+      - ${EXTERNAL_PORT:-127.0.0.1:8080}:80
   postgis:
     image: mdillon/postgis:9.4
     environment:
