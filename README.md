@@ -67,7 +67,7 @@ On the machine with the prebuilt nominatim instance, run the following steps:
   ```bash
   docker-compose stop
   ```
-3. Transfer the nominatim-database docker volume to the target host:
+3. Transfer the `nominatim-database` docker volume to the target host:
 
   ```bash
   $ ./ssh-copy-docker-volume.sh nominatim-database example.com
