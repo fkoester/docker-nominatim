@@ -33,7 +33,7 @@ function initialization {
   fi
 
   log_info "==> Adding user www-data to database"
-  createuser -SDR www-data
+  gosu postgres createuser -SDR www-data
 
   log_info "==> Starting Import..."
   gosu nominatim /app/utils/setup.php --osm-file /importdata/data.osm.pbf --all --osm2pgsql-cache ${OSM2PGSQL_CACHE} 2>&1 || die "Import failed"
