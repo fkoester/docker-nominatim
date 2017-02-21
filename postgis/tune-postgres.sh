@@ -2,6 +2,7 @@
 
 # Taken from http://wiki.openstreetmap.org/wiki/Nominatim/Installation
 cat >> ${PGDATA}/postgresql.conf <<EOF
+max_connections = 512
 shared_buffers = 1GB
 maintenance_work_mem = 5GB
 work_mem = 25MB
