@@ -10,6 +10,7 @@ In contrast to other nominatim docker setups I have seen so far (see [Alternativ
   * PostgreSQL + PostGIS (using plain [mdillon/postgis](https://hub.docker.com/r/mdillon/postgis/) image)
 
   This better complies with Docker's key principal: one container per service. The two docker containers are orchestrated using `docker-compose`.
+  
 2. The import does not happen at buildtime of the image but rather at runtime.
 
   This property is a consequence of 1.) because Nominatim of course needs the Database to import into. It also avoids nasty problems happening when trying to coordinate multiple processes from a Dockerfile.
