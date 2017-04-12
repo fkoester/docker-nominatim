@@ -75,7 +75,7 @@ On the machine with the prebuilt nominatim instance, run the following steps:
   $ ./ssh-copy-docker-volume.sh nominatim-database example.com
   ```
 
-Then on the target machine, follow the steps from the [Getting Started](#getting-started) section but skip step 2, the creation of the volume.
+Then on the target machine, follow the steps from the [Getting Started](#getting-started) section but skip step 3, the creation of the volume.
 
 ## Alternatives
 
